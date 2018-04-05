@@ -1,0 +1,25 @@
+p-
+run impl
+run dis
+run con
+run high priority
+0
+char = p
+1
+var == p
+1
+char = -
+2
+run -
+run dis
+run con
+run high priority
+3
+char = #
+3
+var == #
+3
+char = #
+3
+var == #
+(->,p,#)
