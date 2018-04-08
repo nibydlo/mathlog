@@ -28,10 +28,8 @@ public class Checker {
         BufferedWriter writer = Files.newBufferedWriter(Paths.get("output.txt"));
 
         String fs = reader.readLine();
-        //fs = Utils.cleanStr(fs);
-        while (fs == "") {
+        while (fs.equals("")) {
             fs = reader.readLine();
-            //fs = Utils.cleanStr(fs);
         }
 
         Checker checker = new Checker();
@@ -54,7 +52,6 @@ public class Checker {
         int strNum = 1;
         while ((line = reader.readLine()) != null) {
 
-            //line = Utils.cleanStr(line);
             if (line.equals("")) {
                 continue;
             }
@@ -117,16 +114,12 @@ public class Checker {
         }
 
         //checking for modus ponens
-        if (mpMapProved.get(expression.getHash()) != null) {
-            if (mpMapProved.get(expression.getHash()) != null) {
-                if (alreadyMentioned.get(mpMapProved.get(expression.getHash()).getValue()) != null) {
-                    alreadyMentioned.put(expression.getHash(), strNum);
-                    Integer numAB = alreadyMentioned.get(mpMapProved.get(expression.getHash()).getKey());
-                    Integer numA = alreadyMentioned.get(mpMapProved.get(expression.getHash()).getValue());
-                    writer.write("(" + strNum + ")" + " " + expression.toNormalString() + " (M.P. " + numAB + ", " + numA + ")");
-                    return;
-                }
-            }
+        if (mpMapProved.get(expression.getHash()) != null && alreadyMentioned.get(mpMapProved.get(expression.getHash()).getValue()) != null) {
+                alreadyMentioned.put(expression.getHash(), strNum);
+                Integer numAB = alreadyMentioned.get(mpMapProved.get(expression.getHash()).getKey());
+                Integer numA = alreadyMentioned.get(mpMapProved.get(expression.getHash()).getValue());
+                writer.write("(" + strNum + ")" + " " + expression.toNormalString() + " (M.P. " + numAB + ", " + numA + ")");
+                return;
         }
 
         //default
