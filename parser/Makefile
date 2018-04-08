@@ -1,11 +1,11 @@
 SOURCES = $(shell find src -type f -name "*.java")
 CLASSES = $(patsubst src/%.java,out/%.class,$(SOURCES))
-MAINCLASS = Hw0
+MAINCLASS = Checker
 
 all: $(CLASSES)
 
 run:
-	java ${MAINCLASS}
+	java -classpath out ${MAINCLASS}
 
 pack:
 	zip hw0.zip -r Makefile src
