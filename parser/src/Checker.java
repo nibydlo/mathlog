@@ -16,7 +16,7 @@ public class Checker {
     private ArrayList<Expression> axioms = new ArrayList<>();
     private HashMap<Integer, Integer> hypoMap = new HashMap<>(); //key - hask of hypo, value - number
     private HashMap<Integer, Integer> alreadyMentioned = new HashMap<>(); //key - hash of proved expr, value - number of str, where it was proved
-    private HashMap<Integer, Map.Entry<Integer, Integer>> mpMapProved = new HashMap<>(); //key - hash of B, key - hash of A->B, value - hash of A
+    private HashMap<Integer, ArrayList<Map.Entry<Integer, Integer>>> mpMapProved = new HashMap<>(); //key - hash of B, key - hash of A->B, value - hash of A
 
     public static void main(String[] args) throws IOException {
         Checker checker = new Checker();
@@ -90,8 +90,15 @@ public class Checker {
 
         //adding information for modus ponens;
         if (expression.getType().equals("->")) {
-            Map.Entry<Integer, Integer> tempEntry = new AbstractMap.SimpleEntry<>(expression.getHash(), expression.getLeftChild().getHash());
-            mpMapProved.put(expression.getRightChild().getHash(), tempEntry);
+            if (mpMapProved.get(expression.getRightChild().getHash()) == null) {
+                ArrayList<Map.Entry<Integer, Integer>> tempList = new ArrayList<>();
+                Map.Entry<Integer, Integer> tempEntry = new AbstractMap.SimpleEntry<>(expression.getHash(), expression.getLeftChild().getHash());
+                tempList.add(tempEntry);
+                mpMapProved.put(expression.getRightChild().getHash(), tempList);
+            } else {
+                Map.Entry<Integer, Integer> tempEntry = new AbstractMap.SimpleEntry<>(expression.getHash(), expression.getLeftChild().getHash());
+                mpMapProved.get(expression.getRightChild().getHash()).add(tempEntry);
+            }
         }
 
         //cheching hypos
@@ -114,12 +121,16 @@ public class Checker {
         }
 
         //checking for modus ponens
-        if (mpMapProved.get(expression.getHash()) != null && alreadyMentioned.get(mpMapProved.get(expression.getHash()).getValue()) != null) {
-                alreadyMentioned.put(expression.getHash(), strNum);
-                Integer numAB = alreadyMentioned.get(mpMapProved.get(expression.getHash()).getKey());
-                Integer numA = alreadyMentioned.get(mpMapProved.get(expression.getHash()).getValue());
-                writer.write("(" + strNum + ")" + " " + expression.toNormalString() + " (M.P. " + numAB + ", " + numA + ")");
-                return;
+        if (mpMapProved.get(expression.getHash()) != null) {
+            for (int i = 0; i < mpMapProved.get(expression.getHash()).size(); i++) {
+                if (alreadyMentioned.get(mpMapProved.get(expression.getHash()).get(i).getValue()) != null) {
+                    alreadyMentioned.put(expression.getHash(), strNum);
+                    Integer numAB = alreadyMentioned.get(mpMapProved.get(expression.getHash()).get(i).getKey());
+                    Integer numA = alreadyMentioned.get(mpMapProved.get(expression.getHash()).get(i).getValue());
+                    writer.write("(" + strNum + ")" + " " + expression.toNormalString() + " (M.P. " + numAB + ", " + numA + ")");
+                    return;
+                }
+            }
         }
 
         //default
