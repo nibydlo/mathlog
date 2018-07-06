@@ -34,7 +34,7 @@ public class Checker {
         axioms.add(ep.parse("A->B|A"));
         axioms.add(ep.parse("(A->B)->(C->B)->(A|C->B)"));
         axioms.add(ep.parse("(A->B)->(A->!B)->!A"));
-        axioms.add(ep.parse("A->(!A->B)"));
+        axioms.add(ep.parse("!!A->A"));
     }
 
     public static void main(String[] args) throws IOException {
@@ -56,6 +56,16 @@ public class Checker {
 
         //creating axioms
         ExpressionParser ep = new ExpressionParser();
+        /*checker.axioms.add(ep.parse("A->(B->A)"));
+        checker.axioms.add(ep.parse("(A->B)->(A->B->C)->(A->C)"));
+        checker.axioms.add(ep.parse("A->B->A&B"));
+        checker.axioms.add(ep.parse("A&B->A"));
+        checker.axioms.add(ep.parse("A&B->B"));
+        checker.axioms.add(ep.parse("A->A|B"));
+        checker.axioms.add(ep.parse("A->B|A"));
+        checker.axioms.add(ep.parse("(A->B)->(C->B)->(A|C->B)"));
+        checker.axioms.add(ep.parse("(A->B)->(A->!B)->!A"));
+        checker.axioms.add(ep.parse("!!A->A"));*/
 
         String line;
         int strNum = 1;

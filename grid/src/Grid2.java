@@ -72,7 +72,7 @@ public class Grid2 {
                 ArrayList<Integer> suspect = new ArrayList<>();
                 int upperBound = -1;
                 for (int k = 0; k < n; k++) {
-                    if (rel.get(k).get(i) >= 1 && rel.get(k).get(j) >=1) {
+                    if (rel.get(k).get(i) >= 1 && rel.get(k).get(j) >= 1) {
                         if (upperBound == -1 || rel.get(k).get(upperBound) == 0) {
                             upperBound = k;
                         } else if (rel.get(k).get(upperBound) == -1) {
@@ -101,6 +101,15 @@ public class Grid2 {
                 sum.get(j).set(i, upperBound);
             }
         }
+
+        //checking sum
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(sum.get(i).get(j) + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
 
         //calculate mult
         for (int i = 0; i < n; i++) {
@@ -138,6 +147,15 @@ public class Grid2 {
                 mult.get(j).set(i, lowerBound);
             }
         }
+
+        //checking mult
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(mult.get(i).get(j) + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
 
         //check distr
         for (int i = 0; i < n; i++) {
@@ -190,6 +208,14 @@ public class Grid2 {
                 impl.get(i).set(j, implBound);
             }
         }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(impl.get(i).get(j) + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
 
         //check boolalg
         Integer zero = -1;
